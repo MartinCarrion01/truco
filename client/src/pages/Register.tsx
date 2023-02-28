@@ -2,18 +2,18 @@ import FormContainer from "../components/common/FormContainer";
 import FormRedirectPrompt from "../components/common/FormRedirectPrompt";
 import Header from "../components/common/Header";
 import Subheader from "../components/common/Subheader";
-import LoginForm from "../components/Login/LoginForm";
+import RegisterForm from "../components/Register/RegisterForm";
 
-export default function Login() {
+export default function Register() {
   return (
     <FormContainer>
       <Header text="Truco Online" />
-      <Subheader text="Ingresar a Truco Online" />
-      <LoginForm />
+      <Subheader text="Crear cuenta de jugador de Truco Online" />
+      <RegisterForm />
       <FormRedirectPrompt
-        auxiliaryText="¿No ténes cuenta?"
-        linkText="Registráte."
-        redirectRoute="/register"
+        auxiliaryText="¿Ya ténes cuenta?"
+        linkText="Ingresá."
+        redirectRoute="/login"
       />
     </FormContainer>
   );

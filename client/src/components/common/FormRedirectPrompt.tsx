@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Link as ReactRouterLink } from "react-router-dom";
 
 interface Props {
   auxiliaryText: string;
@@ -9,7 +8,7 @@ interface Props {
 
 export default function FormRedirectPrompt(props: Props) {
   return (
-    <p className="text-gray-500 text-2xl my-2">
+    <p className="text-gray-500 text-xl my-3">
       {props.auxiliaryText + " "}
       <Link
         to={props.redirectRoute}

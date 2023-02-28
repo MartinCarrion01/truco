@@ -4,10 +4,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   resources :users, only: %i[create] do
-    member do
-      patch :set_avatar
-      put :set_avatar
-    end
   end
   
   resources :auth, only: %i[] do

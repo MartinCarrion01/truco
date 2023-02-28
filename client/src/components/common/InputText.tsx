@@ -4,6 +4,7 @@ interface Props{
     setValue: (e: any) => void,
     password?: boolean
 }
+
 export default function InputText(props: Props) {
   return (
     <div className="mb-5">
@@ -13,6 +14,7 @@ export default function InputText(props: Props) {
         placeholder={props.placeholder}
         value={props.value}
         onChange={e => props.setValue(e.target.value)}
+        autoComplete="new-password"
       />
     </div>
   );

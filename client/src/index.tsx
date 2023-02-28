@@ -5,20 +5,22 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <div className="min-h-screen bg-yellow-800">
+    <div className="min-h-screen bg-green-700">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}></Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
-    </div >
+    </div>
   </React.StrictMode>
 );
 
