@@ -15,15 +15,17 @@ export default function LoginForm() {
   return (
     <Form submitHandler={handleLogin}>
       <InputText
-        placeholder="Nombre de usuario"
         value={username}
         setValue={setUsername}
+        label="Nombre de usuario"
+        name="username"
       />
       <InputText
-        placeholder="Contraseña"
         value={password}
         setValue={setPassword}
         password={true}
+        label="Contraseña"
+        name="password"
       />
       <SubmitButton text="Ingresar" />
     </Form>

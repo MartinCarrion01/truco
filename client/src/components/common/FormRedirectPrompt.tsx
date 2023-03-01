@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, Text } from "@chakra-ui/react";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 interface Props {
   auxiliaryText: string;
@@ -8,14 +9,15 @@ interface Props {
 
 export default function FormRedirectPrompt(props: Props) {
   return (
-    <p className="text-gray-500 text-xl my-3">
+    <Text fontSize="md" color="gray.500" mt="2">
       {props.auxiliaryText + " "}
       <Link
-        to={props.redirectRoute}
-        className="text-blue-500 hover:text-blue-600"
+        color="teal.500"
+        as={ReactRouterLink}
+        to={`/${props.redirectRoute}`}
       >
         {props.linkText}
       </Link>
-    </p>
+    </Text>
   );
 }

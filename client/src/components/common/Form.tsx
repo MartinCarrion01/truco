@@ -1,3 +1,5 @@
+import { VStack } from "@chakra-ui/react";
+
 interface Props {
   children?: JSX.Element | JSX.Element[];
   disableAutoComplete?: boolean;
@@ -12,10 +14,11 @@ export default function Form(props: Props) {
 
   return (
     <form
-      className="bg-gray-200 p-10 rounded-lg shadow-md w-3/4 mb-2"
       onSubmit={handleSubmit}
     >
-      {props.children}
+      <VStack spacing={4} align="stretch">
+        {props.children}
+      </VStack>
     </form>
   );
 }

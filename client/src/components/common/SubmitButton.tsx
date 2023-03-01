@@ -1,11 +1,13 @@
+import { Button } from "@chakra-ui/react";
+
 interface Props {
   text: string;
 }
 
 export default function SubmitButton(props: Props) {
   return (
-    <button className="w-full py-3 px-4 text-lg font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200">
+    <Button type="submit" colorScheme="blue" mt={4}>
       {props.text}
-    </button>
+    </Button>
   );
 }

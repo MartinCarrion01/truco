@@ -13,7 +13,7 @@ function App() {
   }, [user, navigate])
 
   return (
-    <div className="b">
+    <div>
       <h2>login</h2>
     </div>
   );

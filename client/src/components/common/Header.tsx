@@ -1,11 +1,13 @@
+import { Heading } from "@chakra-ui/react";
+
 interface Props {
   text: string;
 }
 
 export default function Header(props: Props) {
   return (
-    <h1 className="m-4 p-5 text-6xl font-bold text-gray-800 text-center">
+    <Heading size='3xl' m='4' p='5' textAlign={"center"}>
       {props.text}
-    </h1>
+    </Heading>
   );
 }
