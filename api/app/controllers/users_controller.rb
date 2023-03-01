@@ -10,6 +10,16 @@ class UsersController < ApplicationController
         render(json: {user: @current_user}, status: :ok)
     end
 
+    def upload_avatar
+        @current_user.avatar.purge if @current_user.avatar.attached?
+        @current_user.avatar.attach(params[:avatar])
+        if @current_user.save
+            render(json: { message: "Foto de perfil establecida correctamente" }, status: :ok)
+        else
+            render(json: { message: @current_user.errors }, status: :unprocessable_entity)
+        end
+    end
+
     private
     def user_params
         params.require(:user).permit(:username,

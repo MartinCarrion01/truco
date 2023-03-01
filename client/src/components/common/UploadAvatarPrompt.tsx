@@ -2,8 +2,8 @@ import { FormControl, FormLabel, Image, Input, Text } from "@chakra-ui/react";
 import { useRef } from "react";
 
 interface Props {
-  avatar: string;
   setAvatar: (e: any) => void;
+  setImageUploaded: (e: any) => void;
 }
 
 export default function UploadAvatarPrompt(props: Props) {
@@ -15,11 +15,12 @@ export default function UploadAvatarPrompt(props: Props) {
       return;
     }
     props.setAvatar(files[0]);
+    props.setImageUploaded(true)
   };
 
   return (
     <FormControl>
-      <FormLabel>Foto de perfil</FormLabel>
+      <FormLabel>Seleccione una foto</FormLabel>
       <Input
         type="file"
         ref={fileInput}
@@ -27,6 +28,7 @@ export default function UploadAvatarPrompt(props: Props) {
         onChange={handleAvatarChange}
         size="md"
         pt='1'
+        accept="image/*"
       />
     </FormControl>
   );

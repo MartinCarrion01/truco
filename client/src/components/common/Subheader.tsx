@@ -6,7 +6,7 @@ interface Props {
 
 export default function Subheader(props: Props) {
   return (
-    <Heading size="xl" m="3" p="3" textAlign={"center"}>
+    <Heading size="xl" m="2" p="3" textAlign={"center"}>
       {props.text}
     </Heading>
   );

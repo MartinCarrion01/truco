@@ -18,8 +18,6 @@ export async function login(username: string, password: string) {
   axios.defaults.headers.common.Authorization = token;
 
   await setUser();
-
-  return res;
 }
 
 async function setUser() {
@@ -29,7 +27,28 @@ async function setUser() {
 }
 
 export async function register(user: User) {
-  const res = await axios.post(environment.api_url + "/users", { user });
-  await login(user.username, user.password)
-  return res;
+  const createdRes = await axios.post(environment.api_url + "/users", { user });
+  const createdUser = createdRes.data["user"];
+  const loginRes = await axios.post(environment.api_url + "/auth/login", {
+    username: createdUser.username,
+    password: user.password,
+  });
+
+  const token = loginRes.data["token"];
+  axios.defaults.headers.common.Authorization = token;
+  console.log("token", token);
+}
+
+export async function uploadImage(avatar: any) {
+  const formData = new FormData();
+  formData.append("avatar", avatar);
+  await axios.put(
+    environment.api_url + "/users/upload_avatar",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 }

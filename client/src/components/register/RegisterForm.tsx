@@ -8,7 +8,7 @@ import SubmitButton from "../common/SubmitButton";
 import UploadAvatarPrompt from "../common/UploadAvatarPrompt";
 import ImageUpload from "./RegisterSuccess";
 
-interface Props{
+interface Props {
   setSuccess: (value: boolean) => void;
 }
 
@@ -20,18 +20,20 @@ export default function RegisterForm(props: Props) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleRegister = async () => {
-    setLoading(true);
-    const newUser: User = {
-      username,
-      password,
-      password_confirmation: passwordConfirmation,
-    };
-    await register(newUser).catch((err) => {
-      setErrorMessage(JSON.stringify(err.response.data.message));
+    try {
+      setLoading(true);
+      const newUser: User = {
+        username,
+        password,
+        password_confirmation: passwordConfirmation,
+      };
+      await register(newUser);
       setLoading(false);
-    });
-    setLoading(false);
-    props.setSuccess(true);
+      props.setSuccess(true);
+    } catch (error: any) {
+      setErrorMessage(JSON.stringify(error.response.data.message));
+      setLoading(false);
+    }
   };
 
   return (
