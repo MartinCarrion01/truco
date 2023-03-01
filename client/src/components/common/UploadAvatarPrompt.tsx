@@ -1,13 +1,20 @@
-import { FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
+import { FormControl, FormLabel, Image, Input, Text } from "@chakra-ui/react";
+import { useRef } from "react";
 
 interface Props {
-  avatar: any;
+  avatar: string;
   setAvatar: (e: any) => void;
 }
 
 export default function UploadAvatarPrompt(props: Props) {
+  const fileInput = useRef<HTMLInputElement>(null);
+
   const handleAvatarChange = (event: any) => {
-    props.setAvatar(event.target.files[0]);
+    const files = fileInput.current?.files;
+    if (!files) {
+      return;
+    }
+    props.setAvatar(files[0]);
   };
 
   return (
@@ -15,10 +22,11 @@ export default function UploadAvatarPrompt(props: Props) {
       <FormLabel>Foto de perfil</FormLabel>
       <Input
         type="file"
+        ref={fileInput}
         name="avatar"
-        value={props.avatar}
         onChange={handleAvatarChange}
         size="md"
+        pt='1'
       />
     </FormControl>
   );

@@ -6,11 +6,14 @@ class UsersController < ApplicationController
         render(json: {user: user}, status: :created)
     end
 
+    def current
+        render(json: {user: @current_user}, status: :ok)
+    end
+
     private
     def user_params
         params.require(:user).permit(:username,
             :password,
-            :password_confirmation,
-            :avatar)
+            :password_confirmation)
     end
 end
