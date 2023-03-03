@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import Home from "./pages/Home";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,7 +18,9 @@ root.render(
     <ChakraProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />}></Route>
+          <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

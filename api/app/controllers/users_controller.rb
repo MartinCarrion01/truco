@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     end
 
     def current
-        render(json: {user: @current_user}, status: :ok)
+        render(json: {user: current_user_as_json}, status: :ok)
     end
 
     def upload_avatar
@@ -25,5 +25,9 @@ class UsersController < ApplicationController
         params.require(:user).permit(:username,
             :password,
             :password_confirmation)
+    end
+
+    def current_user_as_json
+        @current_user.as_json(only: %i[username], methods: :avatar_url)
     end
 end

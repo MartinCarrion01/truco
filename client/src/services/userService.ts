@@ -1,11 +1,12 @@
 import axios from "axios";
-import { setCurrentUser } from "../store/userStore";
+import { cleanupCurrentUser, setCurrentUser } from "../store/userStore";
 import { environment } from "../utils/environment";
 
 export interface User {
   username: string;
   password: string;
   password_confirmation: string;
+  avatar_url?: string;
 }
 
 export async function login(username: string, password: string) {
@@ -23,8 +24,10 @@ export async function login(username: string, password: string) {
 async function setUser() {
   const res = await axios.get(environment.api_url + "/users/current");
   const user = res.data["user"];
+  console.log(user);
   setCurrentUser(user);
 }
+
 
 export async function register(user: User) {
   const createdRes = await axios.post(environment.api_url + "/users", { user });
@@ -36,7 +39,6 @@ export async function register(user: User) {
 
   const token = loginRes.data["token"];
   axios.defaults.headers.common.Authorization = token;
-  console.log("token", token);
 }
 
 export async function uploadImage(avatar: any) {
@@ -51,4 +53,9 @@ export async function uploadImage(avatar: any) {
       },
     }
   );
+}
+
+export async function logout(){
+  axios.defaults.headers.common.Authorization = "";
+  cleanupCurrentUser();
 }

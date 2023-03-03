@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import Navbar from "./components/navbar/Navbar";
 import { useSessionUser } from "./store/userStore";
 
 function App() {
@@ -7,15 +8,16 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!user){
-      navigate('/login')
+    if (!user) {
+      navigate("/login");
     }
-  }, [user, navigate])
+  }, [user, navigate]);
 
   return (
-    <div>
-      <h2>login</h2>
-    </div>
+    <>
+      <Navbar />
+      <Outlet />
+    </>
   );
 }
 
