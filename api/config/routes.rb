@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  mount ActionCable.server => "/cable"
+
   resources :users, only: %i[create] do
     collection do
       get :current
@@ -14,6 +16,15 @@ Rails.application.routes.draw do
   resources :auth, only: %i[] do
     collection do
       post :login
+    end
+  end
+
+  resources :tables, only: %i[create] do
+    member do
+      patch :join
+      put :join
+      patch :sit
+      put :sit
     end
   end
 end

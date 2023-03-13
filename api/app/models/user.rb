@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
     has_one_attached :avatar
 
+    has_many :joined_users
+    has_many :tables, through: :joined_users
+
     after_commit :set_default_avatar, on: %i[create]
 
     def avatar_url

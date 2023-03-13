@@ -24,7 +24,6 @@ export async function login(username: string, password: string) {
 async function setUser() {
   const res = await axios.get(environment.api_url + "/users/current");
   const user = res.data["user"];
-  console.log(user);
   setCurrentUser(user);
 }
 
