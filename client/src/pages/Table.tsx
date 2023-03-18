@@ -1,5 +1,6 @@
 import { Flex, Grid, GridItem } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import CommandBoard from "../components/table/CommandBoard";
 import GameTable from "../components/table/GameTable";
 import PlayerContainer from "../components/table/PlayerContainer";
 import WaitingPlayers from "../components/table/WaitingPlayers";
@@ -32,8 +33,13 @@ export default function Table() {
               setCurrentTable(data.table);
             }
             if (data.type === "user_sit") {
-              alert(data.message);
               setCurrentTable(data.table);
+            }
+            if (data.type === "cards_dealt") {
+              setCurrentTable(data.table);
+            }
+            if (data.type === "card_played") {
+              setCurrentTable(data.table)
             }
           },
         }
@@ -46,7 +52,6 @@ export default function Table() {
 
   return (
     <>
-      {" "}
       {table ? (
         <Flex justifyContent={"center"} alignItems="center" flexDir="column">
           <PlayerContainer position={1} />
@@ -62,7 +67,11 @@ export default function Table() {
               <GameTable />
             </GridItem>
             <GridItem gridArea="1 / 3 / 2 / 4">
-              <WaitingPlayers />
+              {table.joined_users.some((user) => user.position === 0) ? (
+                <WaitingPlayers />
+              ) : (
+                <CommandBoard />
+              )}
             </GridItem>
           </Grid>
           <PlayerContainer position={2} />

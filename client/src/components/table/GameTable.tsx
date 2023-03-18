@@ -1,8 +1,9 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+import PlayedCardsContainer from "./PlayedCardsContainer";
 
 export default function GameTable() {
   return (
-    <Box
+    <Flex
       h="400px"
       w="800px"
       bg="green.600"
@@ -10,7 +11,10 @@ export default function GameTable() {
       borderColor="yellow.800"
       borderStyle="solid"
       borderWidth="16px"
+      alignItems="center"
+      justifyContent="center"
     >
-    </Box>
+      <PlayedCardsContainer/>
+    </Flex>
   );
 }

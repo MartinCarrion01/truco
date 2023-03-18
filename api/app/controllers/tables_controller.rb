@@ -1,5 +1,5 @@
 class TablesController < ApplicationController
-    before_action :set_table, only: %i[join sit]
+    before_action :set_table, only: %i[join sit deal_cards my_hand play_card]
 
     def create
         table = Table.create!(current_user: @current_user)
@@ -13,6 +13,21 @@ class TablesController < ApplicationController
 
     def sit
         @table.sit(@current_user, params[:position])
+        render(status: :ok)
+    end
+
+    def deal_cards
+        @table.deal_cards
+        render(status: :ok)
+    end
+
+    def my_hand
+        hand = @table.joined_users.find_by(user_id: @current_user.id).hand
+        render(json: {hand: hand}, status: :ok)
+    end
+
+    def play_card
+        @table.play_card(@current_user, params[:card])
         render(status: :ok)
     end
 

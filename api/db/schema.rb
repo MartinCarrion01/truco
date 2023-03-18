@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_06_204150) do
   create_table "joined_users", force: :cascade do |t|
     t.integer "position", default: 0
     t.text "hand", default: [], array: true
+    t.text "played_cards", default: [], array: true
     t.bigint "user_id"
     t.bigint "table_id"
     t.datetime "created_at", null: false

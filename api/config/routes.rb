@@ -21,8 +21,13 @@ Rails.application.routes.draw do
 
   resources :tables, only: %i[create] do
     member do
+      patch :deal_cards
+      put :deal_cards
+      get :my_hand
       patch :join
       put :join
+      patch :play_card
+      put :play_card
       patch :sit
       put :sit
     end

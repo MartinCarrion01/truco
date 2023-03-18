@@ -12,9 +12,17 @@ interface Props {
 
 export default function PlayerContainer(props: Props) {
   const table = useCurrentTable();
+  const user = useSessionUser();
 
   const isSomeoneSitting = () => {
     return table?.joined_users.some((user) => user.position === props.position);
+  };
+
+  const player = () =>
+    table?.joined_users.find((user) => user.position === props.position);
+
+  const isCurrentUserInThisPosition = () => {
+    return player()?.username === user?.username;
   };
 
   return (
@@ -29,7 +37,11 @@ export default function PlayerContainer(props: Props) {
       alignItems="center"
     >
       {isSomeoneSitting() ? (
-        <Player />
+        <Player
+          username={player()?.username}
+          avatar_url={player()?.avatar_url}
+          isCurrentUser={isCurrentUserInThisPosition()}
+        />
       ) : (
         <SittingPrompt position={props.position} />
       )}

@@ -5,6 +5,7 @@ import { environment } from "../utils/environment";
 interface JoinedUsers {
   id: number;
   position: number;
+  played_cards: string[];
   hand_length: number;
   username: string;
   avatar_url: string;
@@ -36,4 +37,26 @@ export async function sit(table_number: number, position: number) {
   await axios.put(environment.api_url + "/tables/" + table_number + "/sit", {
     position: position,
   });
+}
+
+export async function dealCards(table_number: number) {
+  await axios.put(
+    environment.api_url + "/tables/" + table_number + "/deal_cards"
+  );
+}
+
+export async function myHand(table_number: number) {
+  const res = await axios.get(
+    environment.api_url + "/tables/" + table_number + "/my_hand"
+  );
+  return res.data.hand;
+}
+
+export async function playCard(table_number: number, card: string) {
+  await axios.put(
+    environment.api_url + "/tables/" + table_number + "/play_card",
+    {
+      card: card,
+    }
+  );
 }

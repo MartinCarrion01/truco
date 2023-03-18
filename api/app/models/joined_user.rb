@@ -2,7 +2,7 @@ class JoinedUser < ApplicationRecord
     belongs_to :user
     belongs_to :table
 
-    validate :validate_position_value, on: %i[update]
+    validate :validate_position_value, on: %i[update] 
 
     def username
         self.user.username
@@ -18,7 +18,7 @@ class JoinedUser < ApplicationRecord
 
     private
     def validate_position_value
-        if (0..4).include? self.position
+        unless (0..4).include? self.position
             errors.add(:position, "La posición en la mesa solo puede variar de 0 a 4")
         end
     end
