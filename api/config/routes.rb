@@ -21,15 +21,27 @@ Rails.application.routes.draw do
 
   resources :tables, only: %i[create] do
     member do
+      patch :add_point
+      put :add_point
       patch :deal_cards
       put :deal_cards
+      patch :forfeit
+      put :forfeit
       get :my_hand
       patch :join
       put :join
       patch :play_card
       put :play_card
+      patch :remove_point
+      put :remove_point
+      patch :show_hand
+      put :show_hand
       patch :sit
       put :sit
+
+      resources :joined_users, controller: "tables",param: :username,only: %i[] do
+        get :hand
+      end
     end
   end
 end

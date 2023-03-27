@@ -15,6 +15,10 @@ class User < ApplicationRecord
         avatar.attached? ? Rails.application.routes.url_helpers.rails_blob_url(avatar, host: "http://127.0.0.1:3001") : ''
     end
 
+    def is_admin?(table)
+        table.joined_users.where(is_admin: true).pluck(:user_id).include?(id)
+    end
+
     private
     def set_default_avatar
         unless avatar.attached?

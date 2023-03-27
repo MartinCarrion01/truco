@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CommandBoard from "../components/table/CommandBoard";
 import GameTable from "../components/table/GameTable";
 import PlayerContainer from "../components/table/PlayerContainer";
+import ScoreContainer from "../components/table/score/ScoreContainer";
 import WaitingPlayers from "../components/table/WaitingPlayers";
 import useActionCable from "../hooks/useActionCable";
 import useChannel from "../hooks/useConsumer";
@@ -28,19 +29,7 @@ export default function Table() {
         {
           received: (data) => {
             console.log(data, "data");
-            if (data.type === "user_join") {
-              alert(data.message);
-              setCurrentTable(data.table);
-            }
-            if (data.type === "user_sit") {
-              setCurrentTable(data.table);
-            }
-            if (data.type === "cards_dealt") {
-              setCurrentTable(data.table);
-            }
-            if (data.type === "card_played") {
-              setCurrentTable(data.table)
-            }
+            setCurrentTable(data.table);
           },
         }
       );
@@ -61,7 +50,7 @@ export default function Table() {
             columnGap="22px"
           >
             <GridItem gridArea="1 / 1 / 2 / 2">
-              <WaitingPlayers />
+              <ScoreContainer/>
             </GridItem>
             <GridItem gridArea="1 / 2 / 2 / 3">
               <GameTable />

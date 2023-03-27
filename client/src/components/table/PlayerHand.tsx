@@ -1,10 +1,11 @@
 import { Box, HStack, Image, Text } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
-import { useCallback, useEffect, useState } from "react";
-import { myHand } from "../../services/tableService";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { getHand, myHand } from "../../services/tableService";
 import { useCurrentTable } from "../../store/tableStore";
-import Card from "./Card";
-import EmptyCard from "./EmptyCard";
+import PlayableCard from "./cards/PlayableCard";
+import useHand from "../../hooks/useHand";
+import Card from "./cards/Card";
 
 interface Props {
   username: string | undefined;
@@ -12,41 +13,21 @@ interface Props {
 }
 
 export default function PlayerHand(props: Props) {
-  const table = useCurrentTable();
-  const [hand, setHand] = useState<string[]>([]);
+  const hand = useHand(props.username!, props.isCurrentUser);
 
-  const player = useCallback(() => {
-    return table?.joined_users.find((user) => user.username === props.username);
-  }, [props.username, table]);
-
-  const retrieveHand = useCallback(async () => {
+  const renderHand = () => {
     if (props.isCurrentUser) {
-      if (table) {
-        const playerHand = await myHand(table.table_number);
-        setHand(playerHand);
-      }
+      return hand.map((card, index) => (
+        <PlayableCard key={index} card_name={card} />
+      ));
+    } else {
+      return hand.map((card, index) => <Card key={index} card_name={card} />);
     }
-  }, [props.isCurrentUser, table]);
-
-  useEffect(() => {
-    retrieveHand();
-  }, [
-    props.isCurrentUser,
-    props.username,
-    table?.joined_users,
-    table?.table_number,
-    retrieveHand,
-  ]);
-
-  const nullArray = () => {
-    return new Array(player()?.hand_length).fill(null);
   };
 
   return (
     <HStack mx="3" spacing="3">
-      {props.isCurrentUser
-        ? hand.map((card, index) => <Card key={index} card_name={card} />)
-        : nullArray().map((_, index) => <EmptyCard key={index} />)}
+      {hand && renderHand()}
     </HStack>
   );
 }

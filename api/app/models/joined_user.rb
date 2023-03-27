@@ -2,6 +2,7 @@ class JoinedUser < ApplicationRecord
     belongs_to :user
     belongs_to :table
 
+    validates :points, numericality: { greater_than_or_equal_to: 0 }
     validate :validate_position_value, on: %i[update] 
 
     def username

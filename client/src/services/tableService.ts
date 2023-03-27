@@ -9,6 +9,9 @@ interface JoinedUsers {
   hand_length: number;
   username: string;
   avatar_url: string;
+  points: number;
+  is_admin: boolean;
+  is_showing_hand: boolean;
 }
 
 export interface Table {
@@ -59,4 +62,44 @@ export async function playCard(table_number: number, card: string) {
       card: card,
     }
   );
+}
+
+export async function addPoint(table_number: number, username: string) {
+  await axios.put(
+    environment.api_url + "/tables/" + table_number + "/add_point",
+    {
+      username: username,
+    }
+  );
+}
+
+export async function removePoint(table_number: number, username: string) {
+  await axios.put(
+    environment.api_url + "/tables/" + table_number + "/remove_point",
+    {
+      username: username,
+    }
+  );
+}
+
+export async function forfeit(table_number: number) {
+  await axios.put(environment.api_url + "/tables/" + table_number + "/forfeit");
+}
+
+export async function showHand(table_number: number) {
+  await axios.put(
+    environment.api_url + "/tables/" + table_number + "/show_hand"
+  );
+}
+
+export async function getHand(table_number: number, username: string) {
+  const res = await axios.get(
+    environment.api_url +
+      "/tables/" +
+      table_number +
+      "/joined_users/" +
+      username +
+      "/hand"
+  );
+  return res.data.hand;
 }

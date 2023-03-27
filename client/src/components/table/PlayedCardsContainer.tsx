@@ -1,9 +1,14 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+import { useCurrentTable } from "../../store/tableStore";
+import Card from "./cards/PlayableCard";
+import PlayedCards from "./PlayedCards";
 
-export default function PlayedCardsContainer(){
-    return(
-        <Box border="2px" w="100px" h="100px">
-
-        </Box>
-    )
+export default function PlayedCardsContainer() {
+  const table = useCurrentTable();
+  return (
+    <Flex w="400px" h="200px">
+      <PlayedCards position={1}/>
+      <PlayedCards position={2}/>
+    </Flex>
+  );
 }

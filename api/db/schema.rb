@@ -42,20 +42,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_06_204150) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "game_players", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "games", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "joined_users", force: :cascade do |t|
     t.integer "position", default: 0
+    t.integer "points", default: 0
     t.text "hand", default: [], array: true
     t.text "played_cards", default: [], array: true
+    t.boolean "is_admin", default: false
+    t.boolean "is_showing_hand", default: false
     t.bigint "user_id"
     t.bigint "table_id"
     t.datetime "created_at", null: false
