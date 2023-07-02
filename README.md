@@ -4,4 +4,4 @@ Proyecto fullstack del juego de cartas del Truco para la materia "Programación 
 
 Consiste en un servidor escrito con Ruby usando el framework Ruby on Rails y el cliente web usando React con Typescript
 
-Para ver como instalar, revisar el readme en las carpetas api y web. 
+Para ver como instalar, revisar el readme en las carpetas api y client. 
