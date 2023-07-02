@@ -6,17 +6,16 @@ import PlayerScore from "./PlayerScore";
 export default function ScoreContainer() {
   const table = useCurrentTable();
 
-  const sortedPlayersByPosition = useMemo(() => {
-    return table?.joined_users.sort((a, b) => a.position - b.position);
-  }, [table?.joined_users]);
-
-  console.log(sortedPlayersByPosition);
-
   return (
     <SidebarContainer>
-      {sortedPlayersByPosition!.map((user) => (
-        <PlayerScore key={user.position} username={user.username} />
-      ))}
+      {table?.status === "waiting_players" ? (
+        <></>
+      ) : (
+        <>
+          <PlayerScore kind_team="diagonal" />
+          <PlayerScore kind_team="anti_diagonal" />
+        </>
+      )}
     </SidebarContainer>
   );
 }

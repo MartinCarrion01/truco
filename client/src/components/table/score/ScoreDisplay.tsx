@@ -10,8 +10,12 @@ export default function ScoreDisplay(props: Props) {
     const remainder = props.score % 5;
     const score = new Array(fives).fill(<Image src={"/puntos/points5.png"} />);
     return [
-      remainder > 0 ? <Image key={0} src={`/puntos/points${remainder}.png`} /> : "",
-    ].concat(score.map((item, index) => <div key={index+1 }>{item}</div>));
+      remainder > 0 ? (
+        <Image key={0} src={`/puntos/points${remainder}.png`} />
+      ) : (
+        ""
+      ),
+    ].concat(score.map((item, index) => <div key={index + 1}>{item}</div>));
   };
 
   return (

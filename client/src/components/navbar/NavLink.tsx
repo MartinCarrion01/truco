@@ -1,26 +1,33 @@
-import { Link } from "@chakra-ui/react";
+import { Button, Link } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 
 interface Props {
   name: string;
-  route: string;
+  modal?: JSX.Element;
+  onOpen: () => void;
+  hidden?: boolean
 }
 
 export default function NavLink(props: Props) {
   return (
-    <Link
-      p="2"
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: 'green'
-      }}
-      as={ReactRouterLink}
-      to={props.route}
-      fontSize={"lg"}
-      color='white'
-    >
-      {props.name}
-    </Link>
+    <>
+      <Button
+        p="2"
+        rounded="md"
+        _hover={{
+          textDecoration: "none",
+          bg: "green",
+        }}
+        fontSize="lg"
+        color="white"
+        bg="transparent"
+        border="none"
+        onClick={props.onOpen}
+        hidden={props.hidden}
+      >
+        {props.name}
+      </Button>
+      {props.modal ? props.modal : <></>}
+    </>
   );
 }

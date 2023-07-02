@@ -1,26 +1,29 @@
 class JoinedUser < ApplicationRecord
-    belongs_to :user
-    belongs_to :table
+  belongs_to :user
+  belongs_to :table
 
-    validates :points, numericality: { greater_than_or_equal_to: 0 }
-    validate :validate_position_value, on: %i[update] 
+  enum role: {
+    admin: 0,
+    player: 1
+  }
 
-    def username
-        self.user.username
-    end
+  validate :validate_position_value, on: %i[update]
 
-    def avatar_url
-        self.user.avatar_url
-    end
+  def username
+    user.username
+  end
 
-    def hand_length
-        self.hand.length
-    end
+  def avatar_url
+    user.avatar_url
+  end
 
-    private
-    def validate_position_value
-        unless (0..4).include? self.position
-            errors.add(:position, "La posición en la mesa solo puede variar de 0 a 4")
-        end
-    end
+  def hand_length
+    hand.length
+  end
+
+  private
+
+  def validate_position_value
+    errors.add(:position, 'La posición en la mesa solo puede variar de 0 a 4') unless (0..4).include?(position)
+  end
 end

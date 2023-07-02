@@ -1,11 +1,20 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, Stack } from "@chakra-ui/react";
 
 interface Props {
-    children: JSX.Element | JSX.Element[];
-  }
+  children: JSX.Element | JSX.Element[];
+}
 
 export default function SidebarContainer(props: Props) {
-  return <Box h="100%" w="200px" border="4px" rounded="md" p="3">
-    {props.children}
-  </Box>;
+  return (
+    <Stack
+      h="100%"
+      w="200px"
+      rounded="md"
+      p="3"
+      bg={"gray.100"}
+      boxShadow="md"
+    >
+      {props.children}
+    </Stack>
+  );
 }

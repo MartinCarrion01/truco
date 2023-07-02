@@ -2,25 +2,37 @@ import axios from "axios";
 import { setCurrentTable } from "../store/tableStore";
 import { environment } from "../utils/environment";
 
-interface JoinedUsers {
+interface JoinedUser {
   id: number;
   position: number;
   played_cards: string[];
   hand_length: number;
   username: string;
   avatar_url: string;
-  points: number;
-  is_admin: boolean;
+  role: string;
   is_showing_hand: boolean;
+}
+
+interface Team {
+  id: number;
+  kind_team: "diagonal" | "anti_diagonal";
+  points: number;
+  usernames: string[];
 }
 
 export interface Table {
   table_number: number;
-  joined_users: JoinedUsers[];
+  game_type: "singles" | "doubles";
+  status: "waiting_players" | "waiting" | "playing" | "finished" | "closed";
+  dealer: number;
+  joined_users: JoinedUser[];
+  teams: Team[];
 }
 
-export async function createTable() {
-  const res = await axios.post(environment.api_url + "/tables");
+export async function createTable(game_type: string) {
+  const res = await axios.post(environment.api_url + "/tables", {
+    game_type: game_type,
+  });
 
   const table = res.data["table"] as Table;
   setCurrentTable(table);
@@ -64,20 +76,20 @@ export async function playCard(table_number: number, card: string) {
   );
 }
 
-export async function addPoint(table_number: number, username: string) {
+export async function addPoint(table_number: number, kind_team: string) {
   await axios.put(
     environment.api_url + "/tables/" + table_number + "/add_point",
     {
-      username: username,
+      kind_team: kind_team,
     }
   );
 }
 
-export async function removePoint(table_number: number, username: string) {
+export async function removePoint(table_number: number, kind_team: string) {
   await axios.put(
     environment.api_url + "/tables/" + table_number + "/remove_point",
     {
-      username: username,
+      kind_team: kind_team,
     }
   );
 }
@@ -102,4 +114,16 @@ export async function getHand(table_number: number, username: string) {
       "/hand"
   );
   return res.data.hand;
+}
+
+export async function leaveTable(table_number: number) {
+  await axios.put(
+    environment.api_url + "/tables/" + table_number + "/leave_table"
+  );
+}
+
+export async function closeTable(table_number: number) {
+  await axios.put(
+    environment.api_url + "/tables/" + table_number + "/close_table"
+  );
 }

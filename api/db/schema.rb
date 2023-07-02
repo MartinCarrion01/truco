@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_06_204150) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_01_214347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,29 +44,43 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_06_204150) do
 
   create_table "joined_users", force: :cascade do |t|
     t.integer "position", default: 0
-    t.integer "points", default: 0
+    t.integer "role", default: 1
     t.text "hand", default: [], array: true
     t.text "played_cards", default: [], array: true
-    t.boolean "is_admin", default: false
     t.boolean "is_showing_hand", default: false
     t.bigint "user_id"
     t.bigint "table_id"
+    t.bigint "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["table_id"], name: "index_joined_users_on_table_id"
+    t.index ["team_id"], name: "index_joined_users_on_team_id"
     t.index ["user_id"], name: "index_joined_users_on_user_id"
   end
 
   create_table "tables", force: :cascade do |t|
     t.integer "table_number"
+    t.integer "status", default: 0
+    t.integer "game_type"
+    t.integer "dealer", default: 1
     t.text "deck", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.integer "points", default: 0
+    t.integer "kind_team"
+    t.bigint "table_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["table_id"], name: "index_teams_on_table_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
+    t.boolean "is_playing", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

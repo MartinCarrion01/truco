@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Heading, Text } from "@chakra-ui/react";
-import { useCurrentTable } from "../../store/tableStore";
-import { useSessionUser } from "../../store/userStore";
+import { useCurrentTable } from "../../../store/tableStore";
+import { useSessionUser } from "../../../store/userStore";
 import Player from "./Player";
 import PlayerHand from "./PlayerHand";
 import SittingPrompt from "./SittingPrompt";
@@ -28,13 +28,14 @@ export default function PlayerContainer(props: Props) {
   return (
     <Flex
       h="125px"
-      w="450px"
+      w="520px"
       rounded="md"
-      border="4px"
       p="3"
-      my="2"
-      justifyContent={"center"}
+      my="4"
+      bg={'gray.200'}
       alignItems="center"
+      justifyContent="center"
+      boxShadow="md"
     >
       {isSomeoneSitting() ? (
         <Player

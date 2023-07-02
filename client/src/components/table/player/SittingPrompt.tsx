@@ -1,6 +1,6 @@
 import { Button, Text } from "@chakra-ui/react";
-import { sit } from "../../services/tableService";
-import { useCurrentTable } from "../../store/tableStore";
+import { sit } from "../../../services/tableService";
+import { useCurrentTable } from "../../../store/tableStore";
 
 interface Props{
     position: number,

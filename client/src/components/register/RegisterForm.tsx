@@ -1,12 +1,9 @@
-import { Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { register, User } from "../../services/userService";
 import AlertMessage from "../common/AlertMessage";
 import Form from "../common/Form";
 import InputText from "../common/InputText";
 import SubmitButton from "../common/SubmitButton";
-import UploadAvatarPrompt from "../common/UploadAvatarPrompt";
-import ImageUpload from "./RegisterSuccess";
 
 interface Props {
   setSuccess: (value: boolean) => void;

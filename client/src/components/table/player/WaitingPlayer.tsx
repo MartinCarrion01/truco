@@ -6,7 +6,7 @@ interface Props {
 }
 export default function WaitingPlayer(props: Props) {
   return (
-    <Flex border="2px" w="100%" h="70px" alignItems="center" p="2">
+    <Flex w="100%" h="70px" alignItems="center" p="2">
       <Avatar size="sm" name="avatar" src={props.avatar_url} />
       <Text ml="2" size="sm">{props.username}</Text>
     </Flex>

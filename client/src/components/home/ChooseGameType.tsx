@@ -1,5 +1,7 @@
 import {
   Button,
+  Flex,
+  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { joinTable } from "../../services/tableService";
+import { createTable, joinTable } from "../../services/tableService";
 import Form from "../common/Form";
 import InputText from "../common/InputText";
 import SubmitButton from "../common/SubmitButton";
@@ -21,58 +23,61 @@ import { ErrorContext } from "../../App";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  setLoading: (loading: boolean) => void;
 }
 
-const numberRegex = /([0-9]{6})+/;
-
-export default function JoinTable(props: Props) {
-  const [tableNumber, setTableNumber] = useState("");
-  const setError = useContext(ErrorContext).setError
+export default function ChooseGameType(props: Props) {
   const navigate = useNavigate();
-  const handleJoinTable = async () => {
+  const {setError} = useContext(ErrorContext)
+
+  const handleCreateTable = async (game_type: string) => {
+    props.setLoading(true);
     try {
-      const table = await joinTable(tableNumber);
-      props.onClose();
+      const table = await createTable(game_type);
       navigate(`/table/${table.table_number}`);
       await setUser()
     } catch (error: any) {
+      props.setLoading(false);
       setError(error.response.data.message)
     }
   };
+
   return (
     <Modal
       isOpen={props.isOpen}
       onClose={() => {
-        setTableNumber("");
         props.onClose();
       }}
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Unirse a una partida de truco</ModalHeader>
+        <ModalHeader>Elegí el tipo de partida</ModalHeader>
         <ModalCloseButton />
         <ModalBody mb="3">
-          <Text fontSize="md" mb="3">
-            Para unirte a una partida, escribí el numero (de 6 dígitos) de la
-            partida a la que deseas unirte
+          <Text fontSize="lg" mb="3">
+            Si queres jugar 1v1, elegí{" "}
+            <Text as="span" color="blue.500">
+              Solo
+            </Text>
+            , si queres jugar 2v2 elegí{" "}
+            <Text as="span" color="blue.500">
+              Parejas
+            </Text>
           </Text>
-          <Form submitHandler={handleJoinTable}>
-            <InputText
-              label="Numero de la partida"
-              name="table_number"
-              value={tableNumber}
-              setValue={setTableNumber}
-            />
+          <Flex p={5} justifyContent={"space-between"}>
             <Button
               colorScheme={"green"}
-              type="submit"
-              isDisabled={
-                tableNumber.length !== 6 || !numberRegex.test(tableNumber)
-              }
+              onClick={() => handleCreateTable("singles")}
             >
-              Unirse
+              Solo
             </Button>
-          </Form>
+            <Button
+              colorScheme={"green"}
+              onClick={() => handleCreateTable("doubles")}
+            >
+              Parejas
+            </Button>
+          </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -23,7 +23,7 @@ export default function PlayableCard(props: Props) {
   };
 
   return (
-    <button onClick={playCardHandler} disabled={isLoading}>
+    <button onClick={playCardHandler} disabled={isLoading || table?.status !== "playing"}>
       <Card card_name={props.card_name}/>
     </button>
   );

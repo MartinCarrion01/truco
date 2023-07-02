@@ -20,19 +20,30 @@ import { useSessionUser } from "../../store/userStore";
 import { FiLogOut } from "react-icons/fi";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { logout } from "../../services/userService";
+import EditProfileModal from "../edit_profile/EditProfileModal";
 
-const availableLinks = [
-  { name: "Inicio", route: "/" },
-  { name: "Reglas de juego", route: "/" },
-  { name: "Editar perfil", route: "/plans" },
-];
+export interface DisclosureTypeNav {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+const availableLinks = {
+  edit_profile: {
+    name: "Editar perfil",
+    modal: (disclosure: DisclosureTypeNav) => (
+      <EditProfileModal isOpen={disclosure.isOpen} onClose={disclosure.onClose} />
+    ),
+  },
+};
 
 export default function Navbar() {
   const user = useSessionUser();
+  console.log(user)
+  const editProfileDisclosure = useDisclosure();
 
   return (
-    <Box bg={"green.500"} p={2}>
-      <Flex alignItems={"center"} justifyContent={"space-between"}>
+    <Box bg={"green.500"} p={2} width="100%" height="90px">
+      <Flex alignItems={"center"} justifyContent={"space-between"} height="100%">
         <Flex alignItems={"center"}>
           <Image
             borderRadius="15%"
@@ -40,10 +51,15 @@ export default function Navbar() {
             src="logo_truco.jpg"
             alt="Logo truco"
             mr="2"
+            height="75px"
+            width="100px"
           />
-          {availableLinks.map((link, index) => (
-            <NavLink key={index} name={link.name} route={link.route} />
-          ))}
+          <NavLink
+            hidden={user?.is_playing}
+            name={availableLinks["edit_profile"].name}
+            onOpen={editProfileDisclosure.onOpen}
+            modal={availableLinks["edit_profile"].modal(editProfileDisclosure)}
+          />
         </Flex>
         <Flex alignItems={"center"}>
           <Avatar

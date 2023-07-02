@@ -7,7 +7,10 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[create] do
     collection do
+      put :update
+      patch :update
       get :current
+      get :current_table
       put :upload_avatar
       patch :upload_avatar
     end
@@ -38,6 +41,10 @@ Rails.application.routes.draw do
       put :show_hand
       patch :sit
       put :sit
+      patch :close_table
+      put :close_table
+      patch :leave_table
+      put :leave_table
 
       resources :joined_users, controller: "tables",param: :username,only: %i[] do
         get :hand

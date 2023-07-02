@@ -10,7 +10,7 @@ import { useSessionUser } from "../../../store/userStore";
 import ScoreDisplay from "./ScoreDisplay";
 
 interface Props {
-  username: string;
+  kind_team: string;
 }
 
 export default function PlayerScore(props: Props) {
@@ -21,7 +21,7 @@ export default function PlayerScore(props: Props) {
   const addPointHandler = async () => {
     setIsLoading(true);
     try {
-      await addPoint(table!.table_number, props.username);
+      await addPoint(table!.table_number, props.kind_team);
     } catch (error) {
       console.log(error);
     } finally {
@@ -32,7 +32,7 @@ export default function PlayerScore(props: Props) {
   const removePointHandler = async () => {
     setIsLoading(true);
     try {
-      await removePoint(table!.table_number, props.username);
+      await removePoint(table!.table_number, props.kind_team);
     } catch (error) {
       console.log(error);
     } finally {
@@ -41,14 +41,25 @@ export default function PlayerScore(props: Props) {
   };
 
   const isAdmin = useMemo(() => {
-    return table?.joined_users.find(user => user.is_admin)?.username === currentUser?.username
+    return table?.joined_users.find(user => user.role === "admin")?.username === currentUser?.username
   }, [])
+
+  const renderScoreLabel = useMemo(() => {
+    switch (table?.game_type) {
+      case "singles":
+        return table.teams.find(team => team.kind_team === props.kind_team)?.usernames[0]
+      case "doubles":
+        return 'hola'
+    }
+  }, [table?.teams, table?.game_type, props.kind_team])
+
+
 
   return (
     <Flex w="100%" flexDir="column" alignItems="center" p="2" my="2">
       <HStack>
         <Text ml="2" size="sm">
-          {props.username}
+          {renderScoreLabel}
         </Text>
         <HStack>
           <IconButton
@@ -67,15 +78,12 @@ export default function PlayerScore(props: Props) {
             icon={<MinusIcon />}
             onClick={removePointHandler}
             hidden={!isAdmin}
-            isDisabled={isLoading}
+            isDisabled={isLoading || table!.teams.find(team => team.kind_team === props.kind_team)!.points <= 0}
           />
         </HStack>
       </HStack>
       <ScoreDisplay
-        score={
-          table!.joined_users.find((user) => user.username === props.username)!
-            .points
-        }
+        score={table ? table.teams.find(team => team.kind_team === props.kind_team)!.points : 0}
       />
     </Flex>
   );

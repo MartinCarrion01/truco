@@ -1,15 +1,19 @@
-import { Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Button, Flex, Grid, GridItem, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import CommandBoard from "../components/table/CommandBoard";
-import GameTable from "../components/table/GameTable";
-import PlayerContainer from "../components/table/PlayerContainer";
+import CommandBoard from "../components/table/commands/CommandBoard";
+import GameTable from "../components/table/game_table/GameTable";
+import PlayerContainer from "../components/table/player/PlayerContainer";
 import ScoreContainer from "../components/table/score/ScoreContainer";
-import WaitingPlayers from "../components/table/WaitingPlayers";
+import WaitingPlayers from "../components/table/player/WaitingPlayers";
 import useActionCable from "../hooks/useActionCable";
 import useChannel from "../hooks/useConsumer";
-import { Table as TableType } from "../services/tableService";
+import { Table as TableType, closeTable, leaveTable } from "../services/tableService";
 import { setCurrentTable, useCurrentTable } from "../store/tableStore";
 import { environment } from "../utils/environment";
+import { useSessionUser } from "../store/userStore";
+import SidebarContainer from "../components/table/SidebarContainer";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../services/userService";
 
 type Message = {
   type: string;
@@ -19,8 +23,11 @@ type Message = {
 
 export default function Table() {
   const table = useCurrentTable();
+  const user = useSessionUser();
+  const toast = useToast()
   const { actionCable } = useActionCable(environment.ws_url);
   const { subscribe, unsubscribe } = useChannel<Message>(actionCable);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (table) {
@@ -28,8 +35,16 @@ export default function Table() {
         { channel: "TableChannel", table_number: table.table_number },
         {
           received: (data) => {
-            console.log(data, "data");
-            setCurrentTable(data.table);
+            if(['user_join', 'forfeit', 'show_hand', 'user_left'].includes(data.type)){
+              toast({title: data.message, duration: 3000, isClosable: true})
+            }
+            if(data.type === 'table_closed'){
+              setCurrentTable(data.table);
+              navigate('/')
+            }else{
+              setCurrentTable(data.table);
+              console.log(data.table)
+            }   
           },
         }
       );
@@ -37,7 +52,34 @@ export default function Table() {
     return () => {
       unsubscribe();
     };
-  }, [subscribe, unsubscribe, table]);
+  }, [subscribe, unsubscribe, table, toast, navigate]);
+
+  const isAdmin = () => {
+    const admin_player = table?.joined_users.find(
+      (user) => user.role === "admin"
+    );
+    return admin_player!.username === user?.username;
+  };
+
+  const handleLeaveTable = async () => {
+    try {
+      navigate('/');
+      await leaveTable(table!.table_number);
+      await setUser()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleCloseTable = async () => {
+    try {
+      navigate('/');
+      await closeTable(table!.table_number);
+      await setUser()
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   return (
     <>
@@ -50,17 +92,25 @@ export default function Table() {
             columnGap="22px"
           >
             <GridItem gridArea="1 / 1 / 2 / 2">
-              <ScoreContainer/>
+              <ScoreContainer />
             </GridItem>
             <GridItem gridArea="1 / 2 / 2 / 3">
               <GameTable />
             </GridItem>
             <GridItem gridArea="1 / 3 / 2 / 4">
+              <SidebarContainer>
               {table.joined_users.some((user) => user.position === 0) ? (
                 <WaitingPlayers />
               ) : (
                 <CommandBoard />
               )}
+              <Button colorScheme="green" onClick={handleLeaveTable}>Abandonar mesa</Button>
+              {user && isAdmin() ? (
+                <Button colorScheme="green" onClick={handleCloseTable}>Cerrar mesa</Button>
+              ) : (
+                <></>
+              )}
+              </SidebarContainer>
             </GridItem>
           </Grid>
           <PlayerContainer position={2} />
