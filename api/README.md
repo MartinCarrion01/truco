@@ -9,8 +9,10 @@ Luego, en la línea de comandos, en la raiz del proyecto ejecutar los siguientes
 
 ```
 bundle install
+rails db:create db:migrate db:seed
 rails server -p 3001
 ```
+El comando seed crea usuarios por defecto, consultar el archivo seeds.rb para ver sus credenciales.
 
 ## Dependencias
 
