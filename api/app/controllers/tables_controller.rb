@@ -74,7 +74,7 @@ class TablesController < ApplicationController
   private
 
   def set_table
-    @table = Table.find_by(table_number: params[:id])
+    @table = Table.not_closed.find_by(table_number: params[:id])
     raise ActiveRecord::RecordNotFound, 'La mesa seleccionada no existe' if @table.blank?
   end
 
