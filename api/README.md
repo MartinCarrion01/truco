@@ -1,24 +1,33 @@
-# README
+# API de truco
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Código del lado del servidor del juego donde está contenida la implementación de la lógica del negocio del problema.
 
-Things you may want to cover:
+# ¿Como instalar y usar?
 
-* Ruby version
+Primero tenemos que clonar este proyecto en nuestra computadora.
+Luego, en la línea de comandos, en la raiz del proyecto ejecutar los siguientes comandos
 
-* System dependencies
+```
+bundle install
+rails server -p 3001
+```
 
-* Configuration
+## Dependencias
 
-* Database creation
+Tenemos que tener las siguientes dependencias para que el proyecto funcione correctamente
 
-* Database initialization
+### Ruby
 
-* How to run the test suite
+Versión 3.2.2 o mayor
 
-* Services (job queues, cache servers, search engines, etc.)
+### PostgreSQL
 
-* Deployment instructions
+Este proyecto usa PostgreSQL como base de datos.
+Cabe destacar que nuestra aplicación va a revisar el puerto 5000 para conectar con la base de datos
 
-* ...
+Podemos usar Docker para correr Mongo
+
+```
+docker container run --name truco -e POSTGRES_PASSWORD=root -d -p 5000:5432 postgres
+```
+O seguir las guías de instalación de postgre del sitio oficial: [Instalar postgresql](https://www.postgresql.org/download/)
