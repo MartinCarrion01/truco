@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useCurrentTable } from "../../../store/tableStore";
 import SidebarContainer from "../SidebarContainer";
 import PlayerScore from "./PlayerScore";

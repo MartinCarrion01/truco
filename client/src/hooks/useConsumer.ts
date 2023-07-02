@@ -1,6 +1,5 @@
 import { Consumer, Subscription } from "@rails/actioncable";
-import { useState, useEffect, useRef, useCallback } from "react";
-
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Callbacks<T> = {
   received?: (_message: T) => void;

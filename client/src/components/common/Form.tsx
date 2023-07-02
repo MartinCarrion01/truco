@@ -13,10 +13,8 @@ export default function Form(props: Props) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-    >
-      <VStack spacing={4} align="stretch">
+    <form onSubmit={handleSubmit}>
+      <VStack spacing="4" align="stretch">
         {props.children}
       </VStack>
     </form>

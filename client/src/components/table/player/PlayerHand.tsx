@@ -1,11 +1,7 @@
-import { Box, HStack, Image, Text } from "@chakra-ui/react";
-import { render } from "@testing-library/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { getHand, myHand } from "../../../services/tableService";
-import { useCurrentTable } from "../../../store/tableStore";
-import PlayableCard from "../cards/PlayableCard";
+import { HStack } from "@chakra-ui/react";
 import useHand from "../../../hooks/useHand";
 import Card from "../cards/Card";
+import PlayableCard from "../cards/PlayableCard";
 
 interface Props {
   username: string | undefined;
@@ -26,7 +22,7 @@ export default function PlayerHand(props: Props) {
   };
 
   return (
-    <HStack w='100%' spacing="3">
+    <HStack w="100%" spacing="3">
       {hand && renderHand()}
     </HStack>
   );

@@ -1,10 +1,8 @@
-import { Avatar, Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useCurrentTable } from "../../../store/tableStore";
 import { useSessionUser } from "../../../store/userStore";
 import Player from "./Player";
-import PlayerHand from "./PlayerHand";
 import SittingPrompt from "./SittingPrompt";
-import Username from "./Username";
 
 interface Props {
   position: number;
@@ -32,7 +30,7 @@ export default function PlayerContainer(props: Props) {
       rounded="md"
       p="3"
       my="4"
-      bg={'gray.200'}
+      bg="gray.200"
       alignItems="center"
       justifyContent="center"
       boxShadow="md"

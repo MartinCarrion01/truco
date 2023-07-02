@@ -12,7 +12,7 @@ export default function FormContainer(props: Props) {
       borderWidth="1px"
       borderRadius="lg"
       backgroundColor="white"
-      my='2'
+      my="2"
     >
       {props.children}
     </Box>

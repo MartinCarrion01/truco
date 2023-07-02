@@ -11,7 +11,7 @@ export default function AlertMessage(props: Props) {
     <Alert
       status={props.status}
       variant="solid"
-      borderRadius={15}
+      borderRadius="15"
       mb="5"
       maxWidth={props.width ? props.width : "100%"}
       textAlign="center"

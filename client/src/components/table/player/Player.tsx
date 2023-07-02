@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid, GridItem } from "@chakra-ui/react";
+import { Avatar, Grid, GridItem } from "@chakra-ui/react";
 import PlayerHand from "./PlayerHand";
 import Username from "./Username";
 
@@ -13,7 +13,7 @@ export default function Player(props: Props) {
     <Grid
       templateColumns="repeat(10, 1fr)"
       alignItems="center"
-      gap={2}
+      gap="2"
       width="100%"
     >
       <GridItem colSpan={1}>

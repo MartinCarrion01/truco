@@ -1,8 +1,8 @@
-import { createContext, useCallback, useEffect, useMemo, useState } from "react";
+import { useToast } from "@chakra-ui/react";
+import { createContext, useEffect, useMemo } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import { useSessionUser } from "./store/userStore";
-import { useToast } from "@chakra-ui/react";
 
 export const ErrorContext = createContext({
   setError: (message: string) => {},
@@ -23,16 +23,16 @@ function App() {
     const hash = {
       setError: (message: string) => {
         toast({
-          title: 'Error',
+          title: "Error",
           description: message,
-          status: 'error',
+          status: "error",
           duration: 3000,
           isClosable: true,
-        })
+        });
       },
-    }
-    return hash
-  }, [toast])
+    };
+    return hash;
+  }, [toast]);
 
   return (
     <ErrorContext.Provider value={contextValue}>

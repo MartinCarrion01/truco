@@ -1,16 +1,6 @@
-import {
-  Box,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-} from "@chakra-ui/react";
-import PlayedCardsContainer from "./PlayedCardsContainer";
+import { Flex } from "@chakra-ui/react";
 import { useCurrentTable } from "../../../store/tableStore";
+import PlayedCardsContainer from "./PlayedCardsContainer";
 import TableNumberMessage from "./TableNumberMessage";
 
 export default function GameTable() {
@@ -24,7 +14,7 @@ export default function GameTable() {
       h="400px"
       w="800px"
       bg="green.600"
-      rounded={"md"}
+      rounded="md"
       borderColor="yellow.800"
       borderStyle="solid"
       borderWidth="16px"

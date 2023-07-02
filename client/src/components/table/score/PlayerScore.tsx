@@ -1,8 +1,5 @@
-import {
-  AddIcon,
-  MinusIcon,
-} from "@chakra-ui/icons";
-import { Flex, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import { Flex, HStack, IconButton, Text } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import { addPoint, removePoint } from "../../../services/tableService";
 import { useCurrentTable } from "../../../store/tableStore";
@@ -41,19 +38,21 @@ export default function PlayerScore(props: Props) {
   };
 
   const isAdmin = useMemo(() => {
-    return table?.joined_users.find(user => user.role === "admin")?.username === currentUser?.username
-  }, [])
+    return (
+      table?.joined_users.find((user) => user.role === "admin")?.username ===
+      currentUser?.username
+    );
+  }, []);
 
   const renderScoreLabel = useMemo(() => {
     switch (table?.game_type) {
       case "singles":
-        return table.teams.find(team => team.kind_team === props.kind_team)?.usernames[0]
+        return table.teams.find((team) => team.kind_team === props.kind_team)
+          ?.usernames[0];
       case "doubles":
-        return 'hola'
+        return "hola";
     }
-  }, [table?.teams, table?.game_type, props.kind_team])
-
-
+  }, [table?.teams, table?.game_type, props.kind_team]);
 
   return (
     <Flex w="100%" flexDir="column" alignItems="center" p="2" my="2">
@@ -78,12 +77,21 @@ export default function PlayerScore(props: Props) {
             icon={<MinusIcon />}
             onClick={removePointHandler}
             hidden={!isAdmin}
-            isDisabled={isLoading || table!.teams.find(team => team.kind_team === props.kind_team)!.points <= 0}
+            isDisabled={
+              isLoading ||
+              table!.teams.find((team) => team.kind_team === props.kind_team)!
+                .points <= 0
+            }
           />
         </HStack>
       </HStack>
       <ScoreDisplay
-        score={table ? table.teams.find(team => team.kind_team === props.kind_team)!.points : 0}
+        score={
+          table
+            ? table.teams.find((team) => team.kind_team === props.kind_team)!
+                .points
+            : 0
+        }
       />
     </Flex>
   );

@@ -1,18 +1,10 @@
 import { Button, Flex, Image, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import {
-  register,
-  setUser,
-  update,
-  uploadImage,
-  User,
-} from "../../services/userService";
-import AlertMessage from "../common/AlertMessage";
-import Form from "../common/Form";
-import InputText from "../common/InputText";
-import SubmitButton from "../common/SubmitButton";
-import UploadAvatarPrompt from "../common/UploadAvatarPrompt";
+import { setUser, update, uploadImage } from "../../services/userService";
 import { useSessionUser } from "../../store/userStore";
+import AlertMessage from "../common/AlertMessage";
+import InputText from "../common/InputText";
+import UploadAvatarPrompt from "../common/UploadAvatarPrompt";
 
 interface Props {
   onClose: () => void;
@@ -30,7 +22,7 @@ export default function EditProfileForm(props: Props) {
   };
 
   const handleSave = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       if (imageUploaded) {
         await uploadImage(avatar);
@@ -44,7 +36,7 @@ export default function EditProfileForm(props: Props) {
       setErrorMessage(JSON.stringify(error.response.data.message));
       setLoading(false);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const hasAnythingChanged = () => {
@@ -52,7 +44,7 @@ export default function EditProfileForm(props: Props) {
   };
 
   return (
-    <VStack spacing={4} align="center">
+    <VStack spacing="4" align="center">
       {errorMessage ? (
         <AlertMessage status="error" description={errorMessage} />
       ) : (

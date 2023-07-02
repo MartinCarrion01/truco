@@ -17,7 +17,7 @@ export default function LoginForm() {
     setLoading(true);
     try {
       await login(username, password);
-      navigate("/")
+      navigate("/");
     } catch (error: any) {
       setErrorMessage(JSON.stringify(error.response.data.message));
       setLoading(false);

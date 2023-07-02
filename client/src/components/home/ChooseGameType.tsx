@@ -1,24 +1,19 @@
 import {
   Button,
   Flex,
-  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { createTable, joinTable } from "../../services/tableService";
-import Form from "../common/Form";
-import InputText from "../common/InputText";
-import SubmitButton from "../common/SubmitButton";
-import { setUser } from "../../services/userService";
 import { ErrorContext } from "../../App";
+import { createTable } from "../../services/tableService";
+import { setUser } from "../../services/userService";
 
 interface Props {
   isOpen: boolean;
@@ -28,17 +23,17 @@ interface Props {
 
 export default function ChooseGameType(props: Props) {
   const navigate = useNavigate();
-  const {setError} = useContext(ErrorContext)
+  const { setError } = useContext(ErrorContext);
 
   const handleCreateTable = async (game_type: string) => {
     props.setLoading(true);
     try {
       const table = await createTable(game_type);
       navigate(`/table/${table.table_number}`);
-      await setUser()
+      await setUser();
     } catch (error: any) {
       props.setLoading(false);
-      setError(error.response.data.message)
+      setError(error.response.data.message);
     }
   };
 
@@ -64,7 +59,7 @@ export default function ChooseGameType(props: Props) {
               Parejas
             </Text>
           </Text>
-          <Flex p={5} justifyContent={"space-between"}>
+          <Flex p="5" justifyContent={"space-between"}>
             <Button
               colorScheme={"green"}
               onClick={() => handleCreateTable("singles")}

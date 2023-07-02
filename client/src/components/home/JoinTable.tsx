@@ -4,19 +4,17 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ErrorContext } from "../../App";
 import { joinTable } from "../../services/tableService";
+import { setUser } from "../../services/userService";
 import Form from "../common/Form";
 import InputText from "../common/InputText";
-import SubmitButton from "../common/SubmitButton";
-import { setUser } from "../../services/userService";
-import { ErrorContext } from "../../App";
 
 interface Props {
   isOpen: boolean;
@@ -27,16 +25,16 @@ const numberRegex = /([0-9]{6})+/;
 
 export default function JoinTable(props: Props) {
   const [tableNumber, setTableNumber] = useState("");
-  const setError = useContext(ErrorContext).setError
+  const setError = useContext(ErrorContext).setError;
   const navigate = useNavigate();
   const handleJoinTable = async () => {
     try {
       const table = await joinTable(tableNumber);
       props.onClose();
       navigate(`/table/${table.table_number}`);
-      await setUser()
+      await setUser();
     } catch (error: any) {
-      setError(error.response.data.message)
+      setError(error.response.data.message);
     }
   };
   return (

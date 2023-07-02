@@ -1,4 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -11,7 +11,7 @@ export default function CenteredContainer(props: Props) {
       justifyContent="center"
       bg="green.500"
       minH="100vh"
-      flexWrap='wrap'
+      flexWrap="wrap"
     >
       {props.children}
     </Flex>

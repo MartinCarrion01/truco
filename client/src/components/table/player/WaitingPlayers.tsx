@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { useCurrentTable } from "../../../store/tableStore";
 import WaitingPlayer from "./WaitingPlayer";
 

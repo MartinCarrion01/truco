@@ -1,9 +1,8 @@
 import { Button } from "@chakra-ui/react";
+import { useMemo } from "react";
 import { dealCards, forfeit, showHand } from "../../../services/tableService";
 import { useCurrentTable } from "../../../store/tableStore";
-import SidebarContainer from "../SidebarContainer";
 import { useSessionUser } from "../../../store/userStore";
-import { useMemo } from "react";
 
 export default function CommandBoard() {
   const table = useCurrentTable();

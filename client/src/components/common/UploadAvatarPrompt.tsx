@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Image, Input, Text } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useRef } from "react";
 
 interface Props {
@@ -15,7 +15,7 @@ export default function UploadAvatarPrompt(props: Props) {
       return;
     }
     props.setAvatar(files[0]);
-    props.setImageUploaded(true)
+    props.setImageUploaded(true);
   };
 
   return (
@@ -27,7 +27,7 @@ export default function UploadAvatarPrompt(props: Props) {
         name="avatar"
         onChange={handleAvatarChange}
         size="md"
-        pt='1'
+        pt="1"
         accept="image/*"
       />
     </FormControl>

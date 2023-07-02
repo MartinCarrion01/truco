@@ -1,12 +1,11 @@
 import { Button, Flex, Heading, Image, useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import JoinTable from "../components/home/JoinTable";
-import { createTable } from "../services/tableService";
 import ChooseGameType from "../components/home/ChooseGameType";
-import { useSessionUser } from "../store/userStore";
+import JoinTable from "../components/home/JoinTable";
 import { getTableByCurrentUser } from "../services/userService";
 import { setCurrentTable } from "../store/tableStore";
+import { useSessionUser } from "../store/userStore";
 
 export default function Home() {
   const user = useSessionUser();
@@ -47,10 +46,10 @@ export default function Home() {
         rounded="md"
         my="2"
       />
-      <Heading fontFamily={"Georgia"} fontStyle="italic">
+      <Heading fontFamily="Georgia" fontStyle="italic">
         Truco Online
       </Heading>
-      <Flex width={"40%"} flexDir="column" alignItems={"center"} mt="2">
+      <Flex width="40%" flexDir="column" alignItems="center" mt="2">
         <Button
           onClick={onOpenCreate}
           colorScheme="green"

@@ -1,4 +1,4 @@
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 
 interface Props {
   children: JSX.Element | JSX.Element[];

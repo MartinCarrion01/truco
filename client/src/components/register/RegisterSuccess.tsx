@@ -5,7 +5,7 @@ import {
   Button,
   Flex,
   Image,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
@@ -40,14 +40,14 @@ function ImageUpload(props: any) {
   };
 
   const handleSave = async () => {
-    setIsUploading(true)
+    setIsUploading(true);
     try {
       await uploadImage(avatar);
       props.setShowUploadPic(false);
       axios.defaults.headers.common.Authorization = "";
     } catch (error: any) {
       setErrorMessage(JSON.stringify(error.response.data.message));
-      setIsUploading(false)
+      setIsUploading(false);
     }
   };
 
@@ -56,7 +56,7 @@ function ImageUpload(props: any) {
   };
 
   return (
-    <VStack spacing={4}>
+    <VStack spacing="4">
       <Subheader text="Elegí una foto de perfil" />
       {errorMessage ? (
         <AlertMessage status="error" description={errorMessage} />
@@ -77,12 +77,17 @@ function ImageUpload(props: any) {
         <Button
           onClick={handleSave}
           colorScheme="green"
-          mr={2}
+          mr="2"
           isDisabled={!imageUploaded || isUploading}
         >
           Guardar
         </Button>
-        <Button onClick={handleSkip} variant="ghost" colorScheme="gray" isDisabled={isUploading}>
+        <Button
+          onClick={handleSkip}
+          variant="ghost"
+          colorScheme="gray"
+          isDisabled={isUploading}
+        >
           Omitir
         </Button>
       </Flex>
@@ -103,11 +108,11 @@ function SuccessAlert() {
       textAlign="center"
       height="200px"
     >
-      <AlertIcon boxSize="40px" mr={0} />
-      <AlertTitle mt={4} mb={1} fontSize="lg">
+      <AlertIcon boxSize="40px" mr="0" />
+      <AlertTitle mt="4" mb="1" fontSize="lg">
         ¡Se ha registrado correctamente!
       </AlertTitle>
-      <Button colorScheme={"teal"} my={2} onClick={() => navigate('/login')}>
+      <Button colorScheme="teal" my="2" onClick={() => navigate("/login")}>
         Volver a iniciar sesión
       </Button>
     </Alert>

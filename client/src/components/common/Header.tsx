@@ -6,7 +6,7 @@ interface Props {
 
 export default function Header(props: Props) {
   return (
-    <Heading size='3xl' m='4' p='5' textAlign={"center"}>
+    <Heading size="3xl" m="4" p="5" textAlign={"center"}>
       {props.text}
     </Heading>
   );

@@ -7,7 +7,12 @@ interface Props {
 
 export default function SubmitButton(props: Props) {
   return (
-    <Button type="submit" colorScheme="blue" mt={4} isDisabled={props.disabled ? props.disabled : false}>
+    <Button
+      type="submit"
+      colorScheme="blue"
+      mt="4"
+      isDisabled={props.disabled ? props.disabled : false}
+    >
       {props.text}
     </Button>
   );

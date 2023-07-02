@@ -1,11 +1,10 @@
-import { Button, Link } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 
 interface Props {
   name: string;
   modal?: JSX.Element;
   onOpen: () => void;
-  hidden?: boolean
+  hidden?: boolean;
 }
 
 export default function NavLink(props: Props) {
