@@ -9,15 +9,16 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user
 
   private
+
   def handle_record_not_found_error(error)
-    render(json: {message: error.message}, status: :not_found)
+    render(json: { message: error.message }, status: :not_found)
   end
 
   def handle_record_invalid_error(error)
-    render(json: {message: error.record.errors}, status: :bad_request)
+    render(json: { message: error.record.errors }, status: :bad_request)
   end
 
   def handle_standard_error(error)
-    render(json: {message: error.message}, status: :bad_request)
+    render(json: { message: error.message }, status: :bad_request)
   end
 end
