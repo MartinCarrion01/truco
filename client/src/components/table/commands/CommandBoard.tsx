@@ -45,9 +45,9 @@ export default function CommandBoard() {
       ) : (
         <></>
       )}
-      {table && table.status === "playing" ? (
+      {table && (table.status === "playing" || table.status === "finished") ? (
         <>
-          <Button colorScheme="green" onClick={handleForfeit}>
+          <Button hidden={table.status === "finished"} colorScheme="green" onClick={handleForfeit}>
             Irse al mazo
           </Button>
           <Button colorScheme="green" onClick={handleShowHand}>

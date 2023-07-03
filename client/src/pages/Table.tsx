@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CommandBoard from "../components/table/commands/CommandBoard";
 import GameTable from "../components/table/game_table/GameTable";
 import PlayerContainer from "../components/table/player/PlayerContainer";
+import PlayersContainer from "../components/table/player/PlayersContainer";
 import WaitingPlayers from "../components/table/player/WaitingPlayers";
 import ScoreContainer from "../components/table/score/ScoreContainer";
 import SidebarContainer from "../components/table/SidebarContainer";
@@ -49,6 +50,7 @@ export default function Table() {
             if (data.type === "table_closed") {
               setCurrentTable(data.table);
               navigate("/");
+              setUser().then();
             } else {
               setCurrentTable(data.table);
             }
@@ -70,8 +72,8 @@ export default function Table() {
 
   const handleLeaveTable = async () => {
     try {
-      navigate("/");
       await leaveTable(table!.table_number);
+      navigate("/");
       await setUser();
     } catch (error) {
       console.log(error);
@@ -80,8 +82,8 @@ export default function Table() {
 
   const handleCloseTable = async () => {
     try {
-      navigate("/");
       await closeTable(table!.table_number);
+      navigate("/");
       await setUser();
     } catch (error) {
       console.log(error);
@@ -92,7 +94,11 @@ export default function Table() {
     <>
       {table ? (
         <Flex justifyContent={"center"} alignItems="center" flexDir="column">
-          <PlayerContainer position={1} />
+          {table.game_type === "doubles" ? (
+            <PlayersContainer positions={[1, 2]} />
+          ) : (
+            <PlayerContainer position={1} />
+          )}
           <Grid
             templateColumns="1fr 4fr 1fr"
             templateRows="1fr"
@@ -124,7 +130,11 @@ export default function Table() {
               </SidebarContainer>
             </GridItem>
           </Grid>
-          <PlayerContainer position={2} />
+          {table.game_type === "doubles" ? (
+            <PlayersContainer positions={[3, 4]} />
+          ) : (
+            <PlayerContainer position={2} />
+          )}
         </Flex>
       ) : (
         "Cargando"

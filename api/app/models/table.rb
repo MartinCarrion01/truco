@@ -105,7 +105,7 @@ class Table < ApplicationRecord
     raise ActiveRecord::RecordNotFound, 'El usuario no pertenece a esta partida' if joined_user.blank?
 
     joined_user.is_showing_hand = true
-    self.status = :finished
+    self.status = :finished unless finished?
     joined_user.save!
     save!
     broadcast_table('show_hand', "¡#{user.username} muestra su mano!")

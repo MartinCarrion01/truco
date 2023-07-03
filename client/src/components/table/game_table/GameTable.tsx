@@ -8,7 +8,8 @@ export default function GameTable() {
   const isWaitingPlayers =
     table &&
     table.status === "waiting_players" &&
-    table.joined_users.length < 2;
+    ((table?.game_type === "singles" && table.joined_users.length < 2) ||
+      (table?.game_type === "doubles" && table.joined_users.length < 4));
   return (
     <Flex
       h="400px"

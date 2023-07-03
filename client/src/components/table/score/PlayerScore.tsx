@@ -50,9 +50,13 @@ export default function PlayerScore(props: Props) {
         return table.teams.find((team) => team.kind_team === props.kind_team)
           ?.usernames[0];
       case "doubles":
-        return "hola";
+        return table.teams
+          .find((team) => team.kind_team === props.kind_team)
+          ?.usernames.includes(currentUser!.username)
+          ? "Nos"
+          : "Ellos";
     }
-  }, [table?.teams, table?.game_type, props.kind_team]);
+  }, [table?.teams, table?.game_type, props.kind_team, currentUser]);
 
   return (
     <Flex w="100%" flexDir="column" alignItems="center" p="2" my="2">

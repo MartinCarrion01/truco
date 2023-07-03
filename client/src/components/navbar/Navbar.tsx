@@ -9,9 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { FiLogOut } from "react-icons/fi";
 import { logout } from "../../services/userService";
+import { useCurrentTable } from "../../store/tableStore";
 import { useSessionUser } from "../../store/userStore";
 import EditProfileModal from "../edit_profile/EditProfileModal";
 import NavLink from "./NavLink";
+import TeamBuildingInstructions from "./TeamBuildingInstructions";
 
 export interface DisclosureTypeNav {
   isOpen: boolean;
@@ -28,11 +30,22 @@ const availableLinks = {
       />
     ),
   },
+  team_rules: {
+    name: "¿Como se arman las parejas?",
+    modal: (disclosure: DisclosureTypeNav) => (
+      <TeamBuildingInstructions
+        isOpen={disclosure.isOpen}
+        onClose={disclosure.onClose}
+      />
+    ),
+  },
 };
 
 export default function Navbar() {
   const user = useSessionUser();
+  const table = useCurrentTable();
   const editProfileDisclosure = useDisclosure();
+  const teamRulesDisclosure = useDisclosure();
 
   return (
     <Box bg="green.500" p="2" width="100%" height="90px">
@@ -52,6 +65,12 @@ export default function Navbar() {
             name={availableLinks["edit_profile"].name}
             onOpen={editProfileDisclosure.onOpen}
             modal={availableLinks["edit_profile"].modal(editProfileDisclosure)}
+          />
+          <NavLink
+            hidden={!user?.is_playing || table?.game_type === "singles"}
+            name={availableLinks["team_rules"].name}
+            onOpen={teamRulesDisclosure.onOpen}
+            modal={availableLinks["team_rules"].modal(teamRulesDisclosure)}
           />
         </Flex>
         <Flex alignItems="center">
